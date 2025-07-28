@@ -1,61 +1,115 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 📦 Sistem Informasi Koperasi - Struktur Database
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+---
 
-## About Laravel
+## 📌 ERD Diagram
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🧩 Penjelasan Setiap Tabel dan Kolom
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### 1. `users`
+| Kolom          | Fungsi |
+|----------------|--------|
+| `id`           | Primary key untuk identifikasi user |
+| `name`         | Nama user |
+| `email`        | Email login |
+| `password`     | Password terenkripsi |
+| `created_at`   | Waktu pembuatan akun |
+| `updated_at`   | Waktu update terakhir |
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+### 2. `members`
+| Kolom          | Fungsi |
+|----------------|--------|
+| `id`           | Primary key untuk anggota |
+| `user_id`      | Foreign key ke tabel `users` |
+| `member_number`| Nomor unik anggota |
+| `gender`       | Jenis kelamin anggota |
+| `birth_date`   | Tanggal lahir |
+| `phone`        | Nomor telepon |
+| `address`      | Alamat lengkap |
+| `position`     | Jabatan (anggota, admin, pegawai, dll) |
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+---
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 3. `savings`
+| Kolom          | Fungsi |
+|----------------|--------|
+| `id`           | Primary key simpanan |
+| `member_id`    | Foreign key ke anggota |
+| `type`         | Jenis simpanan: pokok, wajib, sukarela |
+| `amount`       | Nominal uang disimpan |
+| `saved_at`     | Waktu simpanan masuk sistem |
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+### 4. `loans`
+| Kolom          | Fungsi |
+|----------------|--------|
+| `id`           | Primary key pinjaman |
+| `member_id`    | Foreign key ke anggota |
+| `amount`       | Jumlah pinjaman yang diajukan |
+| `tenor`        | Lama tenor dalam bulan |
+| `monthly_payment` | Cicilan per bulan |
+| `loan_date`    | Tanggal pinjaman dibuat |
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+---
 
-### Premium Partners
+### 5. `installments`
+| Kolom          | Fungsi |
+|----------------|--------|
+| `id`           | Primary key cicilan |
+| `loan_id`      | Foreign key ke tabel `loans` |
+| `payment_amount` | Jumlah yang dibayarkan untuk angsuran |
+| `due_date`     | Tanggal jatuh tempo cicilan |
+| `paid_at`      | Tanggal pembayaran dilakukan |
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+---
 
-## Contributing
+### 6. `loan_interests`
+| Kolom          | Fungsi |
+|----------------|--------|
+| `id`           | Primary key bunga |
+| `loan_id`      | Foreign key ke pinjaman |
+| `interest_amount` | Jumlah bunga yang harus dibayar |
+| `due_date`     | Tanggal jatuh tempo bunga |
+| `paid_at`      | Waktu pembayaran bunga dilakukan |
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+---
 
-## Code of Conduct
+### 7. `cash_ledger`
+| Kolom          | Fungsi |
+|----------------|--------|
+| `id`           | Primary key kas |
+| `member_id`    | (Opsional) siapa yang melakukan transaksi |
+| `transaction_date` | Tanggal transaksi dilakukan |
+| `description`  | Keterangan transaksi |
+| `transaction_type` | Jenis transaksi: Simpanan, Pinjaman, Angsuran, Bunga, Pengeluaran |
+| `reference_table` | Nama tabel sumber transaksi (`savings`, `loans`, dll) |
+| `reference_id` | ID dari entitas sumber (misal: `loan_id`) |
+| `debit`        | Uang masuk koperasi |
+| `credit`       | Uang keluar koperasi |
+| `balance`      | Saldo setelah transaksi |
+| `created_at`   | Waktu pencatatan dibuat |
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+## ✅ Catatan
+- Tabel `cash_ledger` fleksibel, cukup menggunakan `reference_table` dan `reference_id` untuk menghubungkan transaksi manapun.
+- `member_id` di `cash_ledger` digunakan jika transaksi berhubungan langsung dengan anggota.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+---
 
-## License
+## 📚 Contoh Transaksi
+| Jenis Transaksi | Table Referensi | debit/credit | Keterangan |
+|-----------------|------------------|--------------|------------|
+| Simpanan Pokok  | `savings`        | debit        | Uang masuk |
+| Pinjaman        | `loans`          | credit       | Uang keluar |
+| Angsuran        | `installments`   | debit        | Uang masuk |
+| Bunga Pinjaman  | `loan_interests` | debit        | Uang masuk |
+| Pengeluaran     | `expenses`       | credit       | Uang keluar |
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+
+Silakan modifikasi struktur sesuai kebutuhan kebijakan koperasi di tempatmu.
