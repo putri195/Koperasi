@@ -6,6 +6,8 @@ Sistem ini dirancang untuk mempermudah manajemen koperasi, yang mencakup fitur s
 
 ## 📌 ERD Diagram
 
+![ERD Sistem Koperasi](https://github.com/putri195/koperasi/blob/main/ERD_Koperasi.png?raw=true)
+
 ## 🧩 Penjelasan Setiap Tabel dan Kolom
 
 ### 🔐 1. `users`
