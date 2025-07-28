@@ -1,9 +1,6 @@
 # 📦 Sistem Informasi Koperasi - Struktur Database
 
----
-
 ## 📌 ERD Diagram
----
 
 ## 🧩 Penjelasan Setiap Tabel dan Kolom
 
