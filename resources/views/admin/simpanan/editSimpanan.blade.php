@@ -3,129 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Detail Anggota - Koperasi</title>
+    <title>Edit Simpanan</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <style>
         body {
-        margin: 0;
-        padding: 0;
-        min-height: 100vh;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
         }
         #sidebar {
-        width: 240px;
-        background-color: #fff;
-        border-right: 1px solid #e0e0e0;
-        height: 100vh;
-        position: fixed;
-        top: 0;
-        left: 0;
-        padding: 20px;
-        padding-top: 50px; /* ✅ Tambahkan padding atas agar tidak kepotong navbar */
-        z-index: 999;
-        box-shadow: 0 0px 8px rgba(0, 0, 0, 0.2);
-        margin-left: -250px;
+            width: 240px;
+            background-color: #fff;
+            border-right: 1px solid #e0e0e0;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding: 20px;
+            padding-top: 50px; 
+            z-index: 999;
+            box-shadow: 0 0px 8px rgba(0, 0, 0, 0.2);
+            margin-left: -250px;
         }
         #sidebar.show {
-        margin-left: 0; /* buka */
+            margin-left: 0;
         }
-        /* #sidebar.collased {
-        margin-left: -250px;
-        } */
         #sidebar .nav-link:hover {
-        background-color: #c9f267 !important;
-        border-radius: 8px;
-        color: #000 !important;
-        font-weight: 500;
+            background-color: #c9f267 !important;
+            border-radius: 8px;
+            color: #000 !important;
+            font-weight: 500;
         }
         #toggleSidebar {
-        border: none;
-        background-color: transparent;
+            border: none;
+            background-color: transparent;
         }
         #toggleSidebar:hover {
-        background-color: #c9f267;
-        border-radius: 8px;
+            background-color: #c9f267;
+            border-radius: 8px;
         }
         .navbar {
-        position: fixed;
-        width: 100%;
-        z-index: 1000;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
         }
         .nav-link {
-        color: #000 !important;
+            color: #000 !important;
         }
         .nav-link.active {
-        background-color: #c9f267;
-        font-weight: bold;
-        color: #000 !important;
-        border-radius: 8px;
-        box-shadow: 0 0px 8px rgba(0, 0, 0, 0.2);
+            background-color: #c9f267;
+            font-weight: bold;
+            color: #000 !important;
+            border-radius: 8px;
+            box-shadow: 0 0px 8px rgba(0, 0, 0, 0.2);
         }
         .nav-link i {
-        margin-right: 8px;
+            margin-right: 8px;
         }
         #content {
-        margin-left: 260px;
-        padding: 40px;
-        padding-top: 95px;
-        /* transition: margin-left 0.3s; */
+            margin-left: 260px;
+            padding: 40px;
+            padding-top: 95px;
         }
         #content.full {
-        margin-left: 0;
+            margin-left: 0;
         }
         .admin-profile {
-        position: fixed;
-        top: 15px;
-        right: 20px;
-        font-size: 16px;
-        z-index: 1000;
+            position: fixed;
+            top: 15px;
+            right: 20px;
+            font-size: 16px;
+            z-index: 1000;
         }
         .dropdown-menu {
-        border: 1.5px solid rgba(40, 40, 40, 0.1);
-        border-radius: 10px;
+            border: 1.5px solid rgba(40, 40, 40, 0.1);
+            border-radius: 10px;
         }
         .dropdown-menu .dropdown-item:hover {
-        background-color: #c9f267;
-        border-radius: 8px;
-        color: #000;
-        margin: 0 8px;
-        width: 90%;
+            background-color: #c9f267;
+            border-radius: 8px;
+            color: #000;
+            margin: 0 8px;
+            width: 90%;
         }
-        .btn-custom {
-        border: none;
-        border-radius: 15px;
-        padding: 15px 20px;
-        min-width: 150px;
-        font-weight: bold;
-        background: #fff;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        transition: all 0.2s;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+        .btn-success {
+            background-color: #c9f267;
+            color: #000;
+            border: none;
         }
-        .btn-custom:hover {
-        background-color: #c9f267;
-        color: #000;
-        transform: translateY(-3px);
-        }
-        .btn-container {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
+        .btn-success:hover {
+            background-color: #b8df5c;
         }
         .card {
-        border: none;
-        box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
-        border-radius: 20px;
+            border: none;
+            box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
         }
-        .back-btn {
-        background-color: #c9f267;
-        color: #000;
-        border: none;
-        }
-        .back-btn:hover {
-        background-color: #b6de5a;
+        .form-label {
+            font-weight: 500;
         }
         .dropdown-toggle-custom::after {
         content: "▼";
@@ -230,57 +206,97 @@
             </li>
         </ul>
     </div>
-    
-    <!-- Content -->
+
+    <!-- Main Content -->
     <div id="content">
         <div class="card p-4">
-            @if(session('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <i class="bi bi-check-circle-fill me-2"></i>{{ session('success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
-            
-            @if (session('error'))
-                <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                    {{ session('error') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
+            <h4 class="fw-bold mb-4">Edit Simpanan</h4>
 
-            @if (session('message'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{ session('message') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <form action="{{ route('simpanan.update', ['id' => $member->id, 'tahun' => $tahun, 'bulan' => $bulan]) }}" method="POST">
+                @csrf
+                @method('PUT')
+
+                <!-- Hidden filter bulan & tahun -->
+                <input type="hidden" name="tahun" value="{{ $tahun }}">
+                <input type="hidden" name="bulan" value="{{ $bulan }}">
+
+                <div class="row mb-3 align-items-center">
+                    <label for="no_anggota" class="col-sm-3 col-form-label">No. Anggota:</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="no_anggota" 
+                            value="{{ $member->member_number }}" readonly>
+                    </div>
                 </div>
-            @endif
-            <h4 class="fw-bold mb-4">Detail Anggota</h4>
-            <div class="row">
-                <div class="col-md-8">
-                    <p><strong>No. anggota:</strong> {{ $member->member_number ?? '-' }}</p>
-                    <p><strong>Nama:</strong> {{ $member->user->name }}</p>
-                    <p><strong>Jenis kelamin:</strong> {{ $member->gender }}</p>
-                    <p><strong>Tgl lahir:</strong> {{ \Carbon\Carbon::parse($member->birth_date)->format('d - m - Y') }}</p>
-                    <p><strong>Umur:</strong> {{ $umur }} Tahun</p>
-                    <p><strong>Email:</strong> {{ $member->user->email }}</p>
-                    <p><strong>HP:</strong> {{ $member->phone ?? '-' }}</p>
-                    <p><strong>Alamat:</strong> {{ $member->address ?? '-' }}</p>
-                    <p><strong>Jabatan:</strong> {{ $member->position }}</p>
-                    <p><strong>Status:</strong> {{ $member->status ?? '-' }}</p>
-                    <a href="{{ route('anggota.index') }}" class="btn back-btn px-4 mt-3">Kembali</a>
+
+                <div class="row mb-3 align-items-center">
+                    <label for="nama" class="col-sm-3 col-form-label">Nama Anggota:</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="nama" 
+                            value="{{ $member->user->name }}" readonly>
+                    </div>
                 </div>
-                <div class="col-md-4 btn-container mt-2">
-                    <a href="{{ route('simpanan.anggota', $member->id) }}}" class="btn btn-custom">
-                        <span>Simpanan</span> <i class="bi bi-wallet2 fs-5"></i>
-                    </a>
-                    <a href="pinjaman.php" class="btn btn-custom">
-                        <span>Pinjaman</span> <i class="bi bi-currency-dollar fs-5"></i>
-                    </a>
-                    <a href="angsuran.php" class="btn btn-custom">
-                        <span>Angsuran</span> <i class="bi bi-receipt fs-5"></i>
-                    </a>
+
+                <div class="row mb-3 align-items-center">
+                    <label class="col-sm-3 col-form-label"><b>Nominal Pembayaran:</b></label>
                 </div>
-            </div>
+
+                <div class="row mb-3 align-items-center">
+                    <label for="s_pokok" class="col-sm-3 col-form-label">S. pokok:</label>
+                    <div class="col-sm-9">
+                        <input type="number" class="form-control" id="s_pokok" name="s_pokok"
+                            value="{{ $pembayaran['Pokok'][0]->amount ?? 0 }}">
+                    </div>
+                </div>
+
+                <div class="row mb-3 align-items-center">
+                    <label for="s_wajib" class="col-sm-3 col-form-label">S. wajib:</label>
+                    <div class="col-sm-9">
+                        <input type="number" class="form-control" id="s_wajib" name="s_wajib"
+                            value="{{ $pembayaran['Wajib'][0]->amount ?? 0 }}">
+                    </div>
+                </div>
+
+                <div class="row mb-3 align-items-center">
+                    <label for="s_sukarela" class="col-sm-3 col-form-label">S. sukarela:</label>
+                    <div class="col-sm-9">
+                        <input type="number" class="form-control" id="s_sukarela" name="s_sukarela"
+                            value="{{ $pembayaran['Sukarela'][0]->amount ?? 0 }}">
+                    </div>
+                </div>
+
+                <div class="row mb-3 align-items-center">
+                    <label class="col-sm-3 col-form-label"><b>Nominal Pengambilan:</b></label>
+                </div>
+
+                <div class="row mb-3 align-items-center">
+                    <label for="s_pokok1" class="col-sm-3 col-form-label">S. pokok:</label>
+                    <div class="col-sm-9">
+                        <input type="number" class="form-control" id="s_pokok1" name="s_pokok1" 
+                            value="{{ $pengambilan['Simpanan Pokok'][0]->credit ?? 0 }}">
+                    </div>
+                </div>
+
+                <div class="row mb-3 align-items-center">
+                    <label for="s_wajib1" class="col-sm-3 col-form-label">S. wajib:</label>
+                    <div class="col-sm-9">
+                        <input type="number" class="form-control" id="s_wajib1" name="s_wajib1" 
+                            value="{{ $pengambilan['Simpanan Wajib'][0]->credit ?? 0 }}">
+                    </div>
+                </div>
+
+                <div class="row mb-3 align-items-center">
+                    <label for="s_sukarela1" class="col-sm-3 col-form-label">S. sukarela:</label>
+                    <div class="col-sm-9">
+                        <input type="number" class="form-control" id="s_sukarela1" name="s_sukarela1" 
+                            value="{{ $pengambilan['Simpanan Sukarela'][0]->credit ?? 0 }}">
+                    </div>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-success">Simpan</button>
+                    <a href="{{ route('simpanan.laporan') }}" class="btn btn-success">Batal</a>
+                </div>
+            </form>
         </div>
     </div>
 

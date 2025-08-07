@@ -1,141 +1,117 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Detail Anggota - Koperasi</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-    <style>
-        body {
-        margin: 0;
-        padding: 0;
-        min-height: 100vh;
-        }
-        #sidebar {
-        width: 240px;
-        background-color: #fff;
-        border-right: 1px solid #e0e0e0;
-        height: 100vh;
-        position: fixed;
-        top: 0;
-        left: 0;
-        padding: 20px;
-        padding-top: 50px; /* ✅ Tambahkan padding atas agar tidak kepotong navbar */
-        z-index: 999;
-        box-shadow: 0 0px 8px rgba(0, 0, 0, 0.2);
-        margin-left: -250px;
-        }
-        #sidebar.show {
-        margin-left: 0; /* buka */
-        }
-        /* #sidebar.collased {
-        margin-left: -250px;
-        } */
-        #sidebar .nav-link:hover {
-        background-color: #c9f267 !important;
-        border-radius: 8px;
-        color: #000 !important;
-        font-weight: 500;
-        }
-        #toggleSidebar {
-        border: none;
-        background-color: transparent;
-        }
-        #toggleSidebar:hover {
-        background-color: #c9f267;
-        border-radius: 8px;
-        }
-        .navbar {
-        position: fixed;
-        width: 100%;
-        z-index: 1000;
-        }
-        .nav-link {
-        color: #000 !important;
-        }
-        .nav-link.active {
-        background-color: #c9f267;
-        font-weight: bold;
-        color: #000 !important;
-        border-radius: 8px;
-        box-shadow: 0 0px 8px rgba(0, 0, 0, 0.2);
-        }
-        .nav-link i {
-        margin-right: 8px;
-        }
-        #content {
-        margin-left: 260px;
-        padding: 40px;
-        padding-top: 95px;
-        /* transition: margin-left 0.3s; */
-        }
-        #content.full {
-        margin-left: 0;
-        }
-        .admin-profile {
-        position: fixed;
-        top: 15px;
-        right: 20px;
-        font-size: 16px;
-        z-index: 1000;
-        }
-        .dropdown-menu {
-        border: 1.5px solid rgba(40, 40, 40, 0.1);
-        border-radius: 10px;
-        }
-        .dropdown-menu .dropdown-item:hover {
-        background-color: #c9f267;
-        border-radius: 8px;
-        color: #000;
-        margin: 0 8px;
-        width: 90%;
-        }
-        .btn-custom {
-        border: none;
-        border-radius: 15px;
-        padding: 15px 20px;
-        min-width: 150px;
-        font-weight: bold;
-        background: #fff;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        transition: all 0.2s;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        }
-        .btn-custom:hover {
-        background-color: #c9f267;
-        color: #000;
-        transform: translateY(-3px);
-        }
-        .btn-container {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-        }
-        .card {
-        border: none;
-        box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
-        border-radius: 20px;
-        }
-        .back-btn {
-        background-color: #c9f267;
-        color: #000;
-        border: none;
-        }
-        .back-btn:hover {
-        background-color: #b6de5a;
-        }
-        .dropdown-toggle-custom::after {
-        content: "▼";
-        font-size: 0.6rem;
-        margin-left: auto;
-        }
-        .dropdown-toggle-custom[aria-expanded="true"]::after {
-        transform: rotate(180deg);
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Setting Pinjaman</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    body {
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+    }
+    #sidebar {
+      width: 240px;
+      background-color: #fff;
+      border-right: 1px solid #e0e0e0;
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      padding: 20px;
+      padding-top: 50px; 
+      z-index: 999;
+      box-shadow: 0 0px 8px rgba(0, 0, 0, 0.2);
+      margin-left: -250px;
+    }
+    #sidebar.show {
+      margin-left: 0;
+    }
+    #sidebar .nav-link:hover {
+      background-color: #c9f267 !important;
+      border-radius: 8px;
+      color: #000 !important;
+      font-weight: 500;
+    }
+    #toggleSidebar {
+      border: none;
+      background-color: transparent;
+    }
+    #toggleSidebar:hover {
+      background-color: #c9f267;
+      border-radius: 8px;
+    }
+    .navbar {
+      position: fixed;
+      width: 100%;
+      z-index: 1000;
+    }
+    .nav-link {
+      color: #000 !important;
+    }
+    .nav-link.active {
+      background-color: #c9f267;
+      font-weight: bold;
+      color: #000 !important;
+      border-radius: 8px;
+      box-shadow: 0 0px 8px rgba(0, 0, 0, 0.2);
+    }
+    .nav-link i {
+      margin-right: 8px;
+    }
+    #content {
+      margin-left: 260px;
+      padding: 40px;
+      padding-top: 95px;
+    }
+    #content.full {
+      margin-left: 0;
+    }
+    .admin-profile {
+      position: fixed;
+      top: 15px;
+      right: 20px;
+      font-size: 16px;
+      z-index: 1000;
+    }
+    .dropdown-menu {
+      border: 1.5px solid rgba(40, 40, 40, 0.1);
+      border-radius: 10px;
+    }
+    .dropdown-menu .dropdown-item:hover {
+      background-color: #c9f267;
+      border-radius: 8px;
+      color: #000;
+      margin: 0 8px;
+      width: 90%;
+    }
+    .btn-success {
+      background-color: #c9f267;
+      color: #000;
+      border: none;
+    }
+    .btn-success:hover {
+      background-color: #b8df5c;
+    }
+    .card {
+      border: none;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+      border-radius: 20px;
+    }
+    .form-label {
+      font-weight: 500;
+    }
+    .dropdown-toggle-custom::after {
+    content: "▼";
+    font-size: 0.6rem;
+    margin-left: auto;
+    }
+    .dropdown-toggle-custom[aria-expanded="true"]::after {
+    transform: rotate(180deg);
+    }
+  </style>
 </head>
 <body>
     <!-- Navbar -->
@@ -211,7 +187,7 @@
                 <div class="collapse" id="submenuPinjaman">
                 <ul class="nav flex-column">
                     <li><a href="#" class="nav-link sub-link">Pinjaman</a></li>
-                    <li><a href="#" class="nav-link sub-link">Setting Pinjaman</a></li>
+                    <li><a href="{{ route('loan-settings.index') }}" class="nav-link sub-link">Setting Pinjaman</a></li>
                 </ul>
                 </div>
             </li>
@@ -230,57 +206,50 @@
             </li>
         </ul>
     </div>
-    
-    <!-- Content -->
+
+    <!-- Main Content -->
     <div id="content">
         <div class="card p-4">
+            {{-- Notifikasi --}}
             @if(session('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <i class="bi bi-check-circle-fill me-2"></i>{{ session('success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
+                <div class="alert alert-success">{{ session('success') }}</div>
+            @endif
+            @if(session('error'))
+                <div class="alert alert-danger">{{ session('error') }}</div>
             @endif
             
-            @if (session('error'))
-                <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                    {{ session('error') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
+            <h4 class="fw-bold mb-4">Setting Pinjaman</h4>
+            <form action="{{ route('loan-settings.store') }}" method="post">
+                @csrf
 
-            @if (session('message'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{ session('message') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <div class="row mb-3 align-items-center">
+                    <label for="interest_rate" class="col-sm-3 col-form-label">Bunga (% per bulan):</label>
+                    <div class="col-sm-9">
+                        <input type="number" step="0.01" class="form-control" id="interest_rate" name="interest_rate"
+                            value="{{ old('interest_rate', $setting->interest_rate ?? '') }}" required>
+                    </div>
                 </div>
-            @endif
-            <h4 class="fw-bold mb-4">Detail Anggota</h4>
-            <div class="row">
-                <div class="col-md-8">
-                    <p><strong>No. anggota:</strong> {{ $member->member_number ?? '-' }}</p>
-                    <p><strong>Nama:</strong> {{ $member->user->name }}</p>
-                    <p><strong>Jenis kelamin:</strong> {{ $member->gender }}</p>
-                    <p><strong>Tgl lahir:</strong> {{ \Carbon\Carbon::parse($member->birth_date)->format('d - m - Y') }}</p>
-                    <p><strong>Umur:</strong> {{ $umur }} Tahun</p>
-                    <p><strong>Email:</strong> {{ $member->user->email }}</p>
-                    <p><strong>HP:</strong> {{ $member->phone ?? '-' }}</p>
-                    <p><strong>Alamat:</strong> {{ $member->address ?? '-' }}</p>
-                    <p><strong>Jabatan:</strong> {{ $member->position }}</p>
-                    <p><strong>Status:</strong> {{ $member->status ?? '-' }}</p>
-                    <a href="{{ route('anggota.index') }}" class="btn back-btn px-4 mt-3">Kembali</a>
+
+                <div class="row mb-3 align-items-center">
+                    <label for="penalty_amount" class="col-sm-3 col-form-label">Denda (Rp):</label>
+                    <div class="col-sm-9">
+                        <input type="number" step="0.01" class="form-control" id="penalty_amount" name="penalty_amount"
+                            value="{{ old('penalty_amount', $setting->penalty_amount ?? '') }}" required>
+                    </div>
                 </div>
-                <div class="col-md-4 btn-container mt-2">
-                    <a href="{{ route('simpanan.anggota', $member->id) }}}" class="btn btn-custom">
-                        <span>Simpanan</span> <i class="bi bi-wallet2 fs-5"></i>
-                    </a>
-                    <a href="pinjaman.php" class="btn btn-custom">
-                        <span>Pinjaman</span> <i class="bi bi-currency-dollar fs-5"></i>
-                    </a>
-                    <a href="angsuran.php" class="btn btn-custom">
-                        <span>Angsuran</span> <i class="bi bi-receipt fs-5"></i>
-                    </a>
+
+                <div class="row mb-3 align-items-center">
+                    <label for="due_day" class="col-sm-3 col-form-label">Tenggat Angsuran (Tanggal per bulan):</label>
+                    <div class="col-sm-9">
+                        <input type="number" class="form-control" id="due_day" name="due_day" min="1" max="31"
+                            value="{{ old('due_day', $setting->due_day ?? '') }}" required>
+                    </div>
                 </div>
-            </div>
+
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-success">Simpan</button>
+                                </div>
+            </form>
         </div>
     </div>
 
@@ -349,8 +318,8 @@
         const pinjamanOpen = localStorage.getItem('pinjamanDropdownOpen') === 'true';
 
         if (pinjamanOpen) {
-        submenuPinjaman.classList.add('show');
-        togglePinjaman.setAttribute('aria-expanded', 'true');
+            submenuPinjaman.classList.add('show');
+            togglePinjaman.setAttribute('aria-expanded', 'true');
         }
 
         togglePinjaman.addEventListener('click', () => {

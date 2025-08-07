@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Detail Anggota - Koperasi</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tambah Transaksi</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
     <style>
         body {
+        min-height: 100vh;
         margin: 0;
         padding: 0;
-        min-height: 100vh;
         }
         #sidebar {
         width: 240px;
@@ -21,17 +21,14 @@
         top: 0;
         left: 0;
         padding: 20px;
-        padding-top: 50px; /* ✅ Tambahkan padding atas agar tidak kepotong navbar */
+        padding-top: 50px; 
         z-index: 999;
         box-shadow: 0 0px 8px rgba(0, 0, 0, 0.2);
         margin-left: -250px;
         }
         #sidebar.show {
-        margin-left: 0; /* buka */
+        margin-left: 0;
         }
-        /* #sidebar.collased {
-        margin-left: -250px;
-        } */
         #sidebar .nav-link:hover {
         background-color: #c9f267 !important;
         border-radius: 8px;
@@ -68,10 +65,16 @@
         margin-left: 260px;
         padding: 40px;
         padding-top: 95px;
-        /* transition: margin-left 0.3s; */
         }
         #content.full {
         margin-left: 0;
+        }
+        .submenu-box {
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 10px;
+        padding: 10px;
+        margin-top: 5px;
         }
         .admin-profile {
         position: fixed;
@@ -80,52 +83,52 @@
         font-size: 16px;
         z-index: 1000;
         }
-        .dropdown-menu {
-        border: 1.5px solid rgba(40, 40, 40, 0.1);
-        border-radius: 10px;
-        }
-        .dropdown-menu .dropdown-item:hover {
-        background-color: #c9f267;
-        border-radius: 8px;
-        color: #000;
-        margin: 0 8px;
-        width: 90%;
-        }
-        .btn-custom {
-        border: none;
-        border-radius: 15px;
-        padding: 15px 20px;
-        min-width: 150px;
-        font-weight: bold;
-        background: #fff;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        transition: all 0.2s;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        }
-        .btn-custom:hover {
-        background-color: #c9f267;
-        color: #000;
-        transform: translateY(-3px);
-        }
-        .btn-container {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-        }
         .card {
         border: none;
         box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
         border-radius: 20px;
         }
-        .back-btn {
-        background-color: #c9f267;
-        color: #000;
-        border: none;
+        .table {
+        border-collapse: separate;
+        border-spacing: 0;
+        overflow: hidden;
+        border: 1px solid #dee2e6;
+        border-radius: 10px;
         }
-        .back-btn:hover {
-        background-color: #b6de5a;
+        .table td, .table th {
+        border: 1px solid #dee2e6;
+        }
+        .summary-card {
+        border-radius: 15px;
+        padding: 20px;
+        text-align: left;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #c9f267;
+        transition: all 0.2s ease-in-out; /* Tambahan transisi */
+        cursor: pointer; /* Opsional */
+        }
+
+        .summary-card:hover {
+        transform: translateY(-3px); /* Gerakan naik sedikit saat hover */
+        box-shadow: 0 8px 16px rgba(0,0,0,0.15); /* Bayangan lebih besar */
+        background-color: #bde35f; /* Sedikit perubahan warna */
+        }
+        .summary-card h6 {
+            font-size: 14px;
+            margin-bottom: 5px;
+            text-align: middle;
+        }
+        /* .summary-card p {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 0;
+        } */
+        .summary-icon {
+            font-size: 2.2rem;
+            opacity: 0.7;
         }
         .dropdown-toggle-custom::after {
         content: "▼";
@@ -134,6 +137,15 @@
         }
         .dropdown-toggle-custom[aria-expanded="true"]::after {
         transform: rotate(180deg);
+        }
+        .btn-cetak {
+        background-color: #CCE77D;
+        border: none;
+        color: #000;
+        }
+        .btn-cetak:hover {
+        background-color: #bbd96e;
+        color: #000;
         }
     </style>
 </head>
@@ -230,57 +242,82 @@
             </li>
         </ul>
     </div>
-    
-    <!-- Content -->
+
+    <!-- Konten -->
     <div id="content">
         <div class="card p-4">
-            @if(session('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <i class="bi bi-check-circle-fill me-2"></i>{{ session('success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
-            
-            @if (session('error'))
-                <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                    {{ session('error') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
+            <h4 class="fw-bold mb-4">Tambah Transaksi</h4>
 
-            @if (session('message'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{ session('message') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
-            <h4 class="fw-bold mb-4">Detail Anggota</h4>
-            <div class="row">
-                <div class="col-md-8">
-                    <p><strong>No. anggota:</strong> {{ $member->member_number ?? '-' }}</p>
-                    <p><strong>Nama:</strong> {{ $member->user->name }}</p>
-                    <p><strong>Jenis kelamin:</strong> {{ $member->gender }}</p>
-                    <p><strong>Tgl lahir:</strong> {{ \Carbon\Carbon::parse($member->birth_date)->format('d - m - Y') }}</p>
-                    <p><strong>Umur:</strong> {{ $umur }} Tahun</p>
-                    <p><strong>Email:</strong> {{ $member->user->email }}</p>
-                    <p><strong>HP:</strong> {{ $member->phone ?? '-' }}</p>
-                    <p><strong>Alamat:</strong> {{ $member->address ?? '-' }}</p>
-                    <p><strong>Jabatan:</strong> {{ $member->position }}</p>
-                    <p><strong>Status:</strong> {{ $member->status ?? '-' }}</p>
-                    <a href="{{ route('anggota.index') }}" class="btn back-btn px-4 mt-3">Kembali</a>
-                </div>
-                <div class="col-md-4 btn-container mt-2">
-                    <a href="{{ route('simpanan.anggota', $member->id) }}}" class="btn btn-custom">
-                        <span>Simpanan</span> <i class="bi bi-wallet2 fs-5"></i>
+            <!-- Summary Cards -->
+            <!-- Baris Pertama: 3 Kartu -->
+            <div class="row mb-4 text-center">
+                <div class="col-md-4 mb-3">
+                    <a href="{{ route('simpanan.pokok.index') }}" class="text-decoration-none text-dark">
+                        <div class="summary-card">
+                            <div><h5>Simpanan Pokok</h5></div>
+                            <i class="bi bi-cash-stack summary-icon text-dark"></i>
+                        </div>
                     </a>
-                    <a href="pinjaman.php" class="btn btn-custom">
-                        <span>Pinjaman</span> <i class="bi bi-currency-dollar fs-5"></i>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <a href="{{ route('simpanan.wajib.index') }}" class="text-decoration-none text-dark">
+                        <div class="summary-card">
+                            <div><h5>Simpanan Wajib</h5></div>
+                            <i class="bi bi-calendar-check summary-icon text-dark"></i>
+                        </div>
                     </a>
-                    <a href="angsuran.php" class="btn btn-custom">
-                        <span>Angsuran</span> <i class="bi bi-receipt fs-5"></i>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <a href="{{ route('simpanan.sukarela.index') }}" class="text-decoration-none text-dark">
+                        <div class="summary-card">
+                            <div><h5>Simpanan Sukarela</h5></div>
+                            <i class="bi bi-wallet2 summary-icon text-dark"></i>
+                        </div>
                     </a>
                 </div>
             </div>
+
+            <!-- Baris Kedua: 3 Kartu -->
+            <div class="row mb-4 text-center">
+                <div class="col-md-4 mb-3">
+                    <a href="form_pinjaman.php" class="text-decoration-none text-dark">
+                        <div class="summary-card">
+                            <div><h5>Pinjaman</h5></div>
+                            <i class="bi bi-journal-text summary-icon text-dark"></i>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <a href="form_angsuran.php" class="text-decoration-none text-dark">
+                        <div class="summary-card">
+                            <div><h5>Angsuran</h5></div>
+                            <i class="bi bi-clock-history summary-icon text-dark"></i>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <a href="form_jasa.php" class="text-decoration-none text-dark">
+                        <div class="summary-card">
+                            <div><h5>Jasa</h5></div>
+                            <i class="bi bi-percent summary-icon text-dark"></i>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Baris Ketiga: 1 Kartu -->
+            <div class="row mb-4 text-center justify-content-center">
+                <div class="col-md-4 mb-3">
+                    <a href="form_modal_awal.php" class="text-decoration-none text-dark">
+                        <div class="summary-card">
+                            <div><h5>Modal Awal</h5></div>
+                            <i class="bi bi-bar-chart-line summary-icon text-dark"></i>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+
         </div>
     </div>
 

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Member;
+use App\Models\Saving;
+use App\Models\CashBook;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
@@ -224,4 +226,92 @@ class HomeController extends Controller
 
         return redirect()->route('profil')->with('success', 'Profil berhasil diperbarui.');
     }
+
+    /* ================= TABEL SIMPANAN (LAPORAN) ================= */
+    public function laporan(Request $request)
+    {
+        $tahun = Carbon::now()->year;
+
+        $members = Member::with('user')
+            ->orderBy('member_number', 'asc')
+            ->get();
+
+        $data = [];
+        foreach ($members as $member) {
+            // ✅ Saldo per 31 Desember tahun sebelumnya
+            $simpananSebelumnya = Saving::where('member_id', $member->id)
+                ->whereYear('saving_date', $tahun - 1)
+                ->selectRaw("
+                    SUM(CASE WHEN type='Pokok' THEN amount ELSE 0 END) as pokok,
+                    SUM(CASE WHEN type='Wajib' THEN amount ELSE 0 END) as wajib,
+                    SUM(CASE WHEN type='Sukarela' THEN amount ELSE 0 END) as sukarela
+                ")->first();
+
+            $totalSebelumnya = ($simpananSebelumnya->pokok ?? 0)
+                            + ($simpananSebelumnya->wajib ?? 0)
+                            + ($simpananSebelumnya->sukarela ?? 0);
+
+            // ✅ Pembayaran bulanan (Januari - Desember)
+            $bulanan = [];
+            $totalPembayaran = 0;
+
+            for ($bulan = 1; $bulan <= 12; $bulan++) {
+                $pembayaran = Saving::where('member_id', $member->id)
+                    ->whereYear('saving_date', $tahun)
+                    ->whereMonth('saving_date', $bulan)
+                    ->selectRaw("
+                        SUM(CASE WHEN type='Pokok' THEN amount ELSE 0 END) as pokok,
+                        SUM(CASE WHEN type='Wajib' THEN amount ELSE 0 END) as wajib,
+                        SUM(CASE WHEN type='Sukarela' THEN amount ELSE 0 END) as sukarela
+                    ")->first();
+
+                $bulanan[$bulan] = [
+                    'pokok'    => $pembayaran->pokok ?? 0,
+                    'wajib'    => $pembayaran->wajib ?? 0,
+                    'sukarela' => $pembayaran->sukarela ?? 0,
+                ];
+
+                $totalPembayaran += ($pembayaran->pokok ?? 0) 
+                                + ($pembayaran->wajib ?? 0) 
+                                + ($pembayaran->sukarela ?? 0);
+            }
+
+            // ✅ Pengambilan (selama 1 tahun penuh, total)
+            $pengambilan = CashBook::where('reference_table', 'savings')
+                ->whereYear('transaction_date', $tahun)
+                ->where('credit', '>', 0)
+                ->where('description', 'like', "%{$member->user->name}%")
+                ->selectRaw("
+                    SUM(CASE WHEN transaction_type = 'Simpanan Pokok' THEN credit ELSE 0 END) as pokok,
+                    SUM(CASE WHEN transaction_type = 'Simpanan Wajib' THEN credit ELSE 0 END) as wajib,
+                    SUM(CASE WHEN transaction_type = 'Simpanan Sukarela' THEN credit ELSE 0 END) as sukarela
+                ")->first();
+
+            $totalPengambilan = ($pengambilan->pokok ?? 0)
+                            + ($pengambilan->wajib ?? 0)
+                            + ($pengambilan->sukarela ?? 0);
+
+            // ✅ Total akhir saldo
+            $totalAkhir = $totalSebelumnya + $totalPembayaran - $totalPengambilan;
+
+            $data[] = [
+                'member_id'        => $member->id,
+                'member_number'    => $member->member_number,
+                'name'             => $member->user->name,
+                'sebelumnya'       => $simpananSebelumnya,
+                'bulanan'          => $bulanan,           // <<<< simpan per bulan
+                'pengambilan'      => $pengambilan,
+                'total_sebelumnya' => $totalSebelumnya,
+                'pembayaran'       => $pembayaran,
+                'total_pengambilan'=> $totalPengambilan,
+                'total_akhir'      => $totalAkhir,
+                'status'           => $member->status, // aktif/tidak aktif
+            ];
+        }
+
+        return view('user.laporan_simpanan', compact('data','tahun'));
+    }
+
+
+
 }

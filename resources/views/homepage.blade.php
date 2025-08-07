@@ -1,6 +1,6 @@
 @php
     $strukturLink = auth()->check() ? route('struktur.organisasi') : route('login.keycloak');
-    $laporan1Link = auth()->check() ? '#' : route('login.keycloak');
+    $laporan1Link = auth()->check() ? route('simpanan.laporanUser') : route('login.keycloak');
     $laporan2Link = auth()->check() ? '#' : route('login.keycloak');
 @endphp
 
@@ -146,7 +146,7 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Laporan Keuangan</a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ $laporan1Link }}">Laporan 1</a></li>
+                            <li><a class="dropdown-item" href="{{ $laporan1Link }}">Laporan Simpanan</a></li>
                             <li><a class="dropdown-item" href="{{ $laporan2Link }}">Laporan 2</a></li>
                         </ul>
                     </li>

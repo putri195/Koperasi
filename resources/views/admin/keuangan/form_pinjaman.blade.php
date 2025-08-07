@@ -1,125 +1,121 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Dashboard Koperasi</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-    <style>
-        body {
-        overflow-x: hidden;
-        margin: 0;
-        padding: 0;
-        }
-        #sidebar {
-        width: 240px;
-        background-color: #fff;
-        border-right: 1px solid #e0e0e0;
-        height: 100vh;
-        position: fixed;
-        top: 0;
-        left: 0;
-        padding: 20px;
-        padding-top: 50px; /* ✅ Tambahkan padding atas agar tidak kepotong navbar */
-        z-index: 999;
-        box-shadow: 0 0px 8px rgba(0, 0, 0, 0.2);
-        margin-left: -250px;
-        }
-        #sidebar.show {
-        margin-left: 0; /* buka */
-        }
-        /* #sidebar.collased {
-        margin-left: -250px;
-        } */
-        #sidebar .nav-link:hover {
-        background-color: #c9f267 !important;
-        border-radius: 8px;
-        color: #000 !important;
-        font-weight: 500;
-        }
-        #toggleSidebar {
-        border: none;
-        background-color: transparent;
-        }
-        #toggleSidebar:hover {
-        background-color: #c9f267;
-        border-radius: 8px;
-        }
-        .navbar {
-        position: fixed;
-        width: 100%;
-        z-index: 1000;
-        }
-        .nav-link {
-        color: #000 !important;
-        }
-        .nav-link.active {
-        background-color: #c9f267;
-        font-weight: bold;
-        color: #000 !important;
-        border-radius: 8px;
-        box-shadow: 0 0px 8px rgba(0, 0, 0, 0.2);
-        }
-        .nav-link i {
-        margin-right: 8px;
-        }
-        #content {
-        margin-left: 260px;
-        padding: 40px;
-        padding-top: 95px;
-        /* transition: margin-left 0.3s; */
-        }
-        #content.full {
-        margin-left: 0;
-        }
-        .greeting-box {
-        background-color: #c9f267;
-        border-radius: 15px;
-        padding: 20px 30px;
-        display: flex;
-        justify-content: space-between;
-        position: relative;
-        min-height: 150px;
-        box-shadow: 4px 5px 4px rgba(0, 0, 0, 0.14);
-        }
-        .robot-img {
-        height: 140px;
-        position: absolute;
-        bottom: 0;
-        right: 30px;
-        }
-        .admin-profile {
-        position: fixed;
-        top: 15px;
-        right: 20px;
-        font-size: 16px;
-        z-index: 1001;
-        }
-        .dropdown-menu {
-        border: 1.5px solid rgba(40, 40, 40, 0.1);
-        border-radius: 10px;
-        }
-        .dropdown-menu .dropdown-item:hover {
-        background-color: #c9f267;
-        border-radius: 8px;
-        color: #000;
-        margin: 0 8px;
-        width: 90%;
-        }
-        .dropdown-toggle-custom::after {
-        content: "▼";
-        font-size: 0.6rem;
-        margin-left: auto;
-        }
-        .dropdown-toggle-custom[aria-expanded="true"]::after {
-        transform: rotate(180deg);
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Form Pinjaman</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    body {
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+    }
+    #sidebar {
+      width: 240px;
+      background-color: #fff;
+      border-right: 1px solid #e0e0e0;
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      padding: 20px;
+      padding-top: 50px; 
+      z-index: 999;
+      box-shadow: 0 0px 8px rgba(0, 0, 0, 0.2);
+      margin-left: -250px;
+    }
+    #sidebar.show {
+      margin-left: 0;
+    }
+    #sidebar .nav-link:hover {
+      background-color: #c9f267 !important;
+      border-radius: 8px;
+      color: #000 !important;
+      font-weight: 500;
+    }
+    #toggleSidebar {
+      border: none;
+      background-color: transparent;
+    }
+    #toggleSidebar:hover {
+      background-color: #c9f267;
+      border-radius: 8px;
+    }
+    .navbar {
+      position: fixed;
+      width: 100%;
+      z-index: 1000;
+    }
+    .nav-link {
+      color: #000 !important;
+    }
+    .nav-link.active {
+      background-color: #c9f267;
+      font-weight: bold;
+      color: #000 !important;
+      border-radius: 8px;
+      box-shadow: 0 0px 8px rgba(0, 0, 0, 0.2);
+    }
+    .nav-link i {
+      margin-right: 8px;
+    }
+    #content {
+      margin-left: 260px;
+      padding: 40px;
+      padding-top: 95px;
+    }
+    #content.full {
+      margin-left: 0;
+    }
+    .admin-profile {
+      position: fixed;
+      top: 15px;
+      right: 20px;
+      font-size: 16px;
+      z-index: 1000;
+    }
+    .dropdown-menu {
+      border: 1.5px solid rgba(40, 40, 40, 0.1);
+      border-radius: 10px;
+    }
+    .dropdown-menu .dropdown-item:hover {
+      background-color: #c9f267;
+      border-radius: 8px;
+      color: #000;
+      margin: 0 8px;
+      width: 90%;
+    }
+    .btn-success {
+      background-color: #c9f267;
+      color: #000;
+      border: none;
+    }
+    .btn-success:hover {
+      background-color: #b8df5c;
+    }
+    .card {
+      border: none;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+      border-radius: 20px;
+    }
+    .form-label {
+      font-weight: 500;
+    }
+    .dropdown-toggle-custom::after {
+    content: "▼";
+    font-size: 0.6rem;
+    margin-left: auto;
+    }
+    .dropdown-toggle-custom[aria-expanded="true"]::after {
+    transform: rotate(180deg);
+    }
+  </style>
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-light bg-light shadow-sm">
+  <nav class="navbar navbar-light bg-light shadow-sm">
         <div class="container-fluid">
             <div class="d-flex align-items-center gap-3">
                 <button class="btn btn-outline-secondary" id="toggleSidebar">
@@ -210,33 +206,63 @@
             </li>
         </ul>
     </div>
-        
+
     <!-- Main Content -->
     <div id="content">
-        @if (session('error'))
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                {{ session('error') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
+        <div class="card p-4">
+            <h4 class="fw-bold mb-4">Form Pinjaman</h4>
+            <form action="anggota.php" method="post">
+                <div class="row mb-3 align-items-center">
+                    <label for="tanggal" class="col-sm-3 col-form-label">Tanggal:</label>
+                    <div class="col-sm-9">
+                        <input type="date" class="form-control" id="tanggal" name="tanggal">
+                    </div>
+                </div>
 
-        @if (session('message'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ session('message') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
-        <h2 class="mb-3">Dashboard</h2>
+                <div class="row mb-3 align-items-center">
+                    <label for="keterangan" class="col-sm-3 col-form-label">Keterangan:</label>
+                    <div class="col-sm-9">
+                        <textarea class="form-control" id="keterangan" name="keterangan" rows="3"></textarea>
+                    </div>
+                </div>
 
-        <div class="greeting-box mt-3">
-        <div>
-            <h4><strong>Hello, {{ $user->name }}!</strong></h4>
-            <p style="font-size: 14px;">
-            Semoga hari Anda menyenangkan. Jangan lupa untuk meninjau laporan keuangan dan aktivitas koperasi hari ini. <br>Anda dapat melihat informasi simpanan, pinjaman, serta angsuran Anda secara lengkap di dashboard ini.
-            </p>
+                <div class="row mb-3 align-items-center">
+                    <label for="pilih_anggota" class="col-sm-3 col-form-label">Pilih anggota:</label>
+                    <div class="col-sm-9">
+                        <select class="form-select" id="pilih_anggota" name="pilih_anggota">
+                        <option value="Laki-Putri">-- Pilih Anggota --</option>
+                        <option value="Laki-Putri">Putri</option>
+                        <option value="Windi">Windi</option>
+                        </select>
+                    </div>
+                </div>
 
-        </div>
-        <img src="{{ asset('image/robots.png')}}" alt="Robot" class="robot-img">
+                <div class="row mb-3 align-items-center">
+                    <label for="JumlahPinjaman" class="col-sm-3 col-form-label">Jumlah Pinjaman:</label>
+                    <div class="col-sm-9">
+                        <input type="number" class="form-control" id="JumlahPinjaman" name="JumlahPinjaman">
+                    </div>
+                </div>
+
+                <div class="row mb-3 align-items-center">
+                    <label for="LamaCicilan" class="col-sm-3 col-form-label">Lama angsuran (/bln):</label>
+                    <div class="col-sm-9">
+                        <input type="number" class="form-control" id="LamaCicilan" name="LamaCicilan">
+                    </div>
+                </div>
+
+                <div class="row mb-3 align-items-center">
+                    <label for="PersentaseBunga" class="col-sm-3 col-form-label">Persentase bunga (%):</label>
+                    <div class="col-sm-9">
+                        <input type="number" class="form-control" id="PersentaseBunga" name="PersentaseBunga">
+                    </div>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-success" onclick="window.location.href='tambah_transaksi.php';">Simpan</button>
+                    <button type="button" class="btn btn-success" onclick="window.location.href='tambah_transaksi.php';">Batal</button>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -271,15 +297,15 @@
         const simpananOpen = localStorage.getItem('simpananDropdownOpen') === 'true';
 
         if (simpananOpen) {
-        submenuSimpanan.classList.add('show');
-        toggleSimpanan.setAttribute('aria-expanded', 'true');
+            submenuSimpanan.classList.add('show');
+            toggleSimpanan.setAttribute('aria-expanded', 'true');
         }
 
         toggleSimpanan.addEventListener('click', () => {
-        const isOpen = submenuSimpanan.classList.contains('show');
-        setTimeout(() => {
-            localStorage.setItem('simpananDropdownOpen', !isOpen);
-        }, 100);
+            const isOpen = submenuSimpanan.classList.contains('show');
+            setTimeout(() => {
+                localStorage.setItem('simpananDropdownOpen', !isOpen);
+            }, 100);
         });
 
         // ====== SUBMENU KEUANGAN ======
@@ -288,33 +314,17 @@
         const keuanganOpen = localStorage.getItem('keuanganDropdownOpen') === 'true';
 
         if (keuanganOpen) {
-        submenuKeuangan.classList.add('show');
-        toggleKeuangan.setAttribute('aria-expanded', 'true');
+            submenuKeuangan.classList.add('show');
+            toggleKeuangan.setAttribute('aria-expanded', 'true');
         }
 
         toggleKeuangan.addEventListener('click', () => {
-        const isOpen = submenuKeuangan.classList.contains('show');
-        setTimeout(() => {
-            localStorage.setItem('keuanganDropdownOpen', !isOpen);
-        }, 100);
+            const isOpen = submenuKeuangan.classList.contains('show');
+            setTimeout(() => {
+                localStorage.setItem('keuanganDropdownOpen', !isOpen);
+            }, 100);
         });
 
-        // ====== SUBMENU PINJAMAN ======
-        const submenuPinjaman = document.getElementById('submenuPinjaman');
-        const togglePinjaman = document.getElementById('togglePinjaman');
-        const pinjamanOpen = localStorage.getItem('pinjamanDropdownOpen') === 'true';
-
-        if (pinjamanOpen) {
-        submenuPinjaman.classList.add('show');
-        togglePinjaman.setAttribute('aria-expanded', 'true');
-        }
-
-        togglePinjaman.addEventListener('click', () => {
-        const isOpen = submenuPinjaman.classList.contains('show');
-        setTimeout(() => {
-            localStorage.setItem('pinjamanDropdownOpen', !isOpen);
-        }, 100);
-        });
     </script>
 </body>
 </html>

@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Detail Anggota - Koperasi</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Simpanan - Koperasi</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
     <style>
         body {
+        min-height: 100vh;
         margin: 0;
         padding: 0;
-        min-height: 100vh;
         }
         #sidebar {
         width: 240px;
@@ -21,17 +21,14 @@
         top: 0;
         left: 0;
         padding: 20px;
-        padding-top: 50px; /* ✅ Tambahkan padding atas agar tidak kepotong navbar */
+        padding-top: 50px; 
         z-index: 999;
         box-shadow: 0 0px 8px rgba(0, 0, 0, 0.2);
         margin-left: -250px;
         }
         #sidebar.show {
-        margin-left: 0; /* buka */
+        margin-left: 0;
         }
-        /* #sidebar.collased {
-        margin-left: -250px;
-        } */
         #sidebar .nav-link:hover {
         background-color: #c9f267 !important;
         border-radius: 8px;
@@ -68,10 +65,16 @@
         margin-left: 260px;
         padding: 40px;
         padding-top: 95px;
-        /* transition: margin-left 0.3s; */
         }
         #content.full {
         margin-left: 0;
+        }
+        .submenu-box {
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 10px;
+        padding: 10px;
+        margin-top: 5px;
         }
         .admin-profile {
         position: fixed;
@@ -80,52 +83,20 @@
         font-size: 16px;
         z-index: 1000;
         }
-        .dropdown-menu {
-        border: 1.5px solid rgba(40, 40, 40, 0.1);
-        border-radius: 10px;
-        }
-        .dropdown-menu .dropdown-item:hover {
-        background-color: #c9f267;
-        border-radius: 8px;
-        color: #000;
-        margin: 0 8px;
-        width: 90%;
-        }
-        .btn-custom {
-        border: none;
-        border-radius: 15px;
-        padding: 15px 20px;
-        min-width: 150px;
-        font-weight: bold;
-        background: #fff;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        transition: all 0.2s;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        }
-        .btn-custom:hover {
-        background-color: #c9f267;
-        color: #000;
-        transform: translateY(-3px);
-        }
-        .btn-container {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-        }
         .card {
         border: none;
         box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
         border-radius: 20px;
         }
-        .back-btn {
-        background-color: #c9f267;
-        color: #000;
-        border: none;
+        .table {
+        border-collapse: separate;
+        border-spacing: 0;
+        overflow: hidden;
+        border: 1px solid #dee2e6;
+        border-radius: 10px;
         }
-        .back-btn:hover {
-        background-color: #b6de5a;
+        .table td, .table th {
+        border: 1px solid #dee2e6;
         }
         .dropdown-toggle-custom::after {
         content: "▼";
@@ -134,6 +105,15 @@
         }
         .dropdown-toggle-custom[aria-expanded="true"]::after {
         transform: rotate(180deg);
+        }
+        .btn-cetak {
+        background-color: #CCE77D;
+        border: none;
+        color: #000;
+        }
+        .btn-cetak:hover {
+        background-color: #bbd96e;
+        color: #000;
         }
     </style>
 </head>
@@ -230,56 +210,101 @@
             </li>
         </ul>
     </div>
-    
-    <!-- Content -->
+
+    <!-- Konten -->
     <div id="content">
         <div class="card p-4">
+            {{-- Notifikasi --}}
             @if(session('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <i class="bi bi-check-circle-fill me-2"></i>{{ session('success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
+                <div class="alert alert-success">{{ session('success') }}</div>
             @endif
-            
-            @if (session('error'))
-                <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                    {{ session('error') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
+            @if(session('error'))
+                <div class="alert alert-danger">{{ session('error') }}</div>
             @endif
+            <h4 class="fw-bold mb-4">Simpanan Wajib</h4>
 
-            @if (session('message'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{ session('message') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <!-- Filter, Pencarian, dan Tombol Cetak -->
+            <div class="row align-items-center mb-3">
+                <div class="col-lg-10">
+                    <div class="d-flex gap-2 flex-wrap">
+                        <!-- Pencarian -->
+                        <div class="input-group" style="width: 450px;">
+                            <span class="input-group-text bg-white border-end-0">
+                                <i class="bi bi-search"></i>
+                            </span>
+                            <input type="text" class="form-control border-start-0"
+                                placeholder="Cari anggota..."
+                                value="{{ request('search') }}"
+                                onkeypress="if(event.key==='Enter'){window.location='?search='+this.value+'&tahun={{ $tahun }}&quarter={{ $quarter }}'}">
+                            @if(request('search'))
+                                <button class="btn btn-outline-secondary" onclick="window.location='{{ route('simpanan.wajib', ['tahun' => $tahun, 'quarter' => $quarter]) }}'">×</button>
+                            @endif
+                        </div>
+
+                        <!-- Filter Quarter -->
+                        <select class="form-select" style="width: 150px;"
+                            onchange="window.location='{{ route('simpanan.wajib') }}?tahun={{ $tahun }}&quarter='+this.value">
+                            <option value="1" {{ $quarter==1 ? 'selected' : '' }}>January - April</option>
+                            <option value="2" {{ $quarter==2 ? 'selected' : '' }}>May - August</option>
+                            <option value="3" {{ $quarter==3 ? 'selected' : '' }}>September - December</option>
+                        </select>
+
+                        <!-- Filter Tahun -->
+                        <select class="form-select" style="width: 100px;"
+                            onchange="window.location='{{ route('simpanan.wajib') }}?tahun='+this.value+'&quarter={{ $quarter }}'">
+                            @foreach($availableYears as $thn)
+                                <option value="{{ $thn }}" {{ $tahun==$thn ? 'selected' : '' }}>{{ $thn }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
-            @endif
-            <h4 class="fw-bold mb-4">Detail Anggota</h4>
-            <div class="row">
-                <div class="col-md-8">
-                    <p><strong>No. anggota:</strong> {{ $member->member_number ?? '-' }}</p>
-                    <p><strong>Nama:</strong> {{ $member->user->name }}</p>
-                    <p><strong>Jenis kelamin:</strong> {{ $member->gender }}</p>
-                    <p><strong>Tgl lahir:</strong> {{ \Carbon\Carbon::parse($member->birth_date)->format('d - m - Y') }}</p>
-                    <p><strong>Umur:</strong> {{ $umur }} Tahun</p>
-                    <p><strong>Email:</strong> {{ $member->user->email }}</p>
-                    <p><strong>HP:</strong> {{ $member->phone ?? '-' }}</p>
-                    <p><strong>Alamat:</strong> {{ $member->address ?? '-' }}</p>
-                    <p><strong>Jabatan:</strong> {{ $member->position }}</p>
-                    <p><strong>Status:</strong> {{ $member->status ?? '-' }}</p>
-                    <a href="{{ route('anggota.index') }}" class="btn back-btn px-4 mt-3">Kembali</a>
-                </div>
-                <div class="col-md-4 btn-container mt-2">
-                    <a href="{{ route('simpanan.anggota', $member->id) }}}" class="btn btn-custom">
-                        <span>Simpanan</span> <i class="bi bi-wallet2 fs-5"></i>
-                    </a>
-                    <a href="pinjaman.php" class="btn btn-custom">
-                        <span>Pinjaman</span> <i class="bi bi-currency-dollar fs-5"></i>
-                    </a>
-                    <a href="angsuran.php" class="btn btn-custom">
-                        <span>Angsuran</span> <i class="bi bi-receipt fs-5"></i>
+
+                <!-- Tombol Cetak -->
+                <div class="col-lg-2 text-lg-end mt-2 mt-lg-0">
+                    <a href="{{ route('simpanan.wajib.export', ['tahun' => $tahun]) }}" class="btn btn-cetak w-100 w-lg-auto">
+                        <i class="bi bi-printer"></i> Cetak {{ $tahun }}
                     </a>
                 </div>
+            </div>
+
+            <!-- Tabel Simpanan -->
+            <div class="table-responsive">
+                <table class="table align-middle text-center">
+                    <thead class="table-light">
+                        <tr>
+                            <th rowspan="2" class="text-center align-middle">No. Anggota</th>
+                            <th rowspan="2" class="text-center align-middle">Nama Anggota</th>
+                            <th rowspan="2" class="text-center align-middle">Sisa simpanan sebelumnya</th>
+                            @foreach($quarterBulan as $bulan)
+                                <th colspan="2" class="text-center align-middle">
+                                    {{ \Carbon\Carbon::create()->month($bulan)->translatedFormat('F') }} {{ $tahun }}
+                                </th>
+                                <th rowspan="2" class="text-center align-middle">Sisa</th>
+                            @endforeach
+                        </tr>
+                        <tr>
+                            @foreach($quarterBulan as $bulan)
+                                <th class="text-center align-middle">Bayar</th>
+                                <th class="text-center align-middle">Ambil</th>
+                            @endforeach
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($data as $row)
+                            <tr>
+                                <td>{{ $row['member_number'] }}</td>
+                                <td class="text-start">{{ $row['name'] }}</td>
+                                <td>{{ $row['sisa_awal'] }}</td>
+
+                                @foreach($quarterBulan as $bulan)
+                                    <td>{{ $row['bulan'][$bulan]['bayar'] ?? 0 }}</td>
+                                    <td>{{ $row['bulan'][$bulan]['ambil'] ?? 0 }}</td>
+                                    <td>{{ $row['bulan'][$bulan]['sisa'] ?? 0 }}</td>
+                                @endforeach
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

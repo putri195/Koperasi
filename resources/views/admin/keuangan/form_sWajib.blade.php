@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Detail Anggota - Koperasi</title>
+    <title>Form Simpanan</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <style>
         body {
+        min-height: 100vh;
         margin: 0;
         padding: 0;
-        min-height: 100vh;
         }
         #sidebar {
         width: 240px;
@@ -21,17 +21,14 @@
         top: 0;
         left: 0;
         padding: 20px;
-        padding-top: 50px; /* ✅ Tambahkan padding atas agar tidak kepotong navbar */
+        padding-top: 50px; 
         z-index: 999;
         box-shadow: 0 0px 8px rgba(0, 0, 0, 0.2);
         margin-left: -250px;
         }
         #sidebar.show {
-        margin-left: 0; /* buka */
+        margin-left: 0;
         }
-        /* #sidebar.collased {
-        margin-left: -250px;
-        } */
         #sidebar .nav-link:hover {
         background-color: #c9f267 !important;
         border-radius: 8px;
@@ -68,11 +65,11 @@
         margin-left: 260px;
         padding: 40px;
         padding-top: 95px;
-        /* transition: margin-left 0.3s; */
         }
         #content.full {
         margin-left: 0;
         }
+
         .admin-profile {
         position: fixed;
         top: 15px;
@@ -80,10 +77,12 @@
         font-size: 16px;
         z-index: 1000;
         }
+
         .dropdown-menu {
         border: 1.5px solid rgba(40, 40, 40, 0.1);
         border-radius: 10px;
         }
+
         .dropdown-menu .dropdown-item:hover {
         background-color: #c9f267;
         border-radius: 8px;
@@ -91,41 +90,25 @@
         margin: 0 8px;
         width: 90%;
         }
-        .btn-custom {
-        border: none;
-        border-radius: 15px;
-        padding: 15px 20px;
-        min-width: 150px;
-        font-weight: bold;
-        background: #fff;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        transition: all 0.2s;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        }
-        .btn-custom:hover {
+
+        .btn-success {
         background-color: #c9f267;
         color: #000;
-        transform: translateY(-3px);
+        border: none;
         }
-        .btn-container {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
+
+        .btn-success:hover {
+        background-color: #b8df5c;
         }
+
         .card {
         border: none;
         box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
         border-radius: 20px;
         }
-        .back-btn {
-        background-color: #c9f267;
-        color: #000;
-        border: none;
-        }
-        .back-btn:hover {
-        background-color: #b6de5a;
+
+        .form-label {
+        font-weight: 500;
         }
         .dropdown-toggle-custom::after {
         content: "▼";
@@ -230,57 +213,58 @@
             </li>
         </ul>
     </div>
-    
-    <!-- Content -->
+
+    <!-- Main Content -->
     <div id="content">
         <div class="card p-4">
+            {{-- Notifikasi --}}
             @if(session('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <i class="bi bi-check-circle-fill me-2"></i>{{ session('success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
+                <div class="alert alert-success">{{ session('success') }}</div>
             @endif
-            
-            @if (session('error'))
-                <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                    {{ session('error') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
+            @if(session('error'))
+                <div class="alert alert-danger">{{ session('error') }}</div>
             @endif
+            <h4 class="fw-bold mb-4">Form Simpanan Wajib</h4>
+            <form action="{{ route('simpanan.wajib.tambah') }}" method="post" enctype="multipart/form-data">
+                @csrf
+                <div class="row mb-3 align-items-center">
+                    <label for="tanggal" class="col-sm-3 col-form-label">Tanggal:</label>
+                    <div class="col-sm-9">
+                        <input type="date" class="form-control" id="tanggal" name="tanggal">
+                    </div>
+                </div>
 
-            @if (session('message'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{ session('message') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <div class="row mb-3 align-items-center">
+                    <label for="keterangan" class="col-sm-3 col-form-label">Keterangan:</label>
+                    <div class="col-sm-9">
+                        <textarea class="form-control" id="keterangan" name="keterangan" rows="3"></textarea>
+                    </div>
                 </div>
-            @endif
-            <h4 class="fw-bold mb-4">Detail Anggota</h4>
-            <div class="row">
-                <div class="col-md-8">
-                    <p><strong>No. anggota:</strong> {{ $member->member_number ?? '-' }}</p>
-                    <p><strong>Nama:</strong> {{ $member->user->name }}</p>
-                    <p><strong>Jenis kelamin:</strong> {{ $member->gender }}</p>
-                    <p><strong>Tgl lahir:</strong> {{ \Carbon\Carbon::parse($member->birth_date)->format('d - m - Y') }}</p>
-                    <p><strong>Umur:</strong> {{ $umur }} Tahun</p>
-                    <p><strong>Email:</strong> {{ $member->user->email }}</p>
-                    <p><strong>HP:</strong> {{ $member->phone ?? '-' }}</p>
-                    <p><strong>Alamat:</strong> {{ $member->address ?? '-' }}</p>
-                    <p><strong>Jabatan:</strong> {{ $member->position }}</p>
-                    <p><strong>Status:</strong> {{ $member->status ?? '-' }}</p>
-                    <a href="{{ route('anggota.index') }}" class="btn back-btn px-4 mt-3">Kembali</a>
+
+                <div class="row mb-3 align-items-center">
+                    <label for="JumlahSimpanan" class="col-sm-3 col-form-label">Jumlah Simpanan:</label>
+                    <div class="col-sm-9">
+                        <input type="number" class="form-control" id="JumlahSimpanan" name="JumlahSimpanan">
+                    </div>
                 </div>
-                <div class="col-md-4 btn-container mt-2">
-                    <a href="{{ route('simpanan.anggota', $member->id) }}}" class="btn btn-custom">
-                        <span>Simpanan</span> <i class="bi bi-wallet2 fs-5"></i>
-                    </a>
-                    <a href="pinjaman.php" class="btn btn-custom">
-                        <span>Pinjaman</span> <i class="bi bi-currency-dollar fs-5"></i>
-                    </a>
-                    <a href="angsuran.php" class="btn btn-custom">
-                        <span>Angsuran</span> <i class="bi bi-receipt fs-5"></i>
-                    </a>
+
+                <div class="row mb-3 align-items-center">
+                    <label for="pilih_anggota" class="col-sm-3 col-form-label">Pilih anggota:</label>
+                    <div class="col-sm-9">
+                        <select class="form-select" id="pilih_anggota" name="pilih_anggota">
+                            <option value="">-- Pilih Anggota --</option>
+                            @foreach($members as $member)
+                                <option value="{{ $member->id }}">{{ $member->member_number }} - {{ $member->user->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
-            </div>
+
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-success">Simpan</button>
+                    <button type="button" class="btn btn-success" onclick="window.location.href='{{ route('tambahTransaksi') }}';">Batal</button>
+                </div>
+            </form>
         </div>
     </div>
 

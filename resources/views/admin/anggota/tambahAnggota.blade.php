@@ -163,9 +163,32 @@
             </li>
             <li><a href="{{ route('pegawai.index') }}" class="nav-link"><i class="bi bi-person"></i> Pegawai</a></li>
             <li><a href="{{ route('anggota.index') }}" class="nav-link"><i class="bi bi-people"></i> Anggota</a></li>
-            <li><a href="#" class="nav-link"><i class="bi bi-folder"></i> Simpanan</a></li>
+            <li>
+                <a href="#submenuSimpanan" data-bs-toggle="collapse" class="nav-link dropdown-toggle-custom d-flex justify-content-between align-items-center" id="toggleSimpanan">
+                <span><i class="bi bi-folder"></i> Simpanan</span>
+                </a>
+                <div class="collapse" id="submenuSimpanan">
+                <ul class="nav flex-column">
+                    <li><a href="{{ route('simpanan.laporan') }}" class="nav-link sub-link">Simpanan</a></li>
+                    <li><a href="{{ route('simpanan.pokok') }}" class="nav-link sub-link">Simpanan Pokok</a></li>
+                    <li><a href="{{ route('simpanan.wajib') }}" class="nav-link sub-link">Simpanan Wajib</a></li>
+                    <li><a href="{{ route('simpanan.sukarela') }}" class="nav-link sub-link">Simpanan Sukarela</a></li>
+                </ul>
+                </div>
+            </li>
             <li><a href="#" class="nav-link"><i class="bi bi-journal-text"></i> Pinjaman</a></li>
             <li><a href="#" class="nav-link"><i class="bi bi-cash"></i> Angsuran</a></li>
+            <li>
+                <a href="#submenuKeuangan" data-bs-toggle="collapse" class="nav-link dropdown-toggle-custom d-flex justify-content-between align-items-center" id="toggleKeuangan">
+                <span><i class="bi bi-currency-dollar"></i> Keuangan</span>
+                </a>
+                <div class="collapse" id="submenuKeuangan">
+                <ul class="nav flex-column">
+                    <li><a href="{{ route('tambahTransaksi') }}" class="nav-link sub-link">Tambah transaksi</a></li>
+                    <li><a href="kas.php" class="nav-link sub-link">Kas</a></li>
+                </ul>
+                </div>
+            </li>
         </ul>
     </div>
 

@@ -77,7 +77,7 @@ class KeycloakController extends Controller
             $idToken = $keycloakUser->accessTokenResponseBody['id_token'] ?? null;
 
             Log::info('Keycloak user data', (array) $keycloakUser);
-            // dd($keycloakUser);
+            dd($keycloakUser);
             Log::info('Token data', [
                 'access_token' => $keycloakUser->token,
                 'refresh_token' => $keycloakUser->refreshToken,

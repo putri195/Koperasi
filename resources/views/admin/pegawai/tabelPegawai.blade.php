@@ -140,6 +140,14 @@
             border: none;
             color: #fff;
             }
+            .dropdown-toggle-custom::after {
+            content: "▼";
+            font-size: 0.6rem;
+            margin-left: auto;
+            }
+            .dropdown-toggle-custom[aria-expanded="true"]::after {
+            transform: rotate(180deg);
+            }
         </style>
     </head>
 <body>
@@ -196,9 +204,43 @@
             </li>
             <li><a href="{{ route('pegawai.index') }}" class="nav-link"><i class="bi bi-person"></i> Pegawai</a></li>
             <li><a href="{{ route('anggota.index') }}" class="nav-link"><i class="bi bi-people"></i> Anggota</a></li>
-            <li><a href="#" class="nav-link"><i class="bi bi-folder"></i> Simpanan</a></li>
-            <li><a href="#" class="nav-link"><i class="bi bi-journal-text"></i> Pinjaman</a></li>
+            <li>
+                <a href="#submenuSimpanan" data-bs-toggle="collapse" class="nav-link dropdown-toggle-custom d-flex justify-content-between align-items-center" id="toggleSimpanan">
+                <span><i class="bi bi-folder"></i> Simpanan</span>
+                </a>
+                <div class="collapse" id="submenuSimpanan">
+                <ul class="nav flex-column">
+                    <li><a href="{{ route('simpanan.laporan') }}" class="nav-link sub-link">Simpanan</a></li>
+                    <li><a href="{{ route('simpanan.pokok') }}" class="nav-link sub-link">Simpanan Pokok</a></li>
+                    <li><a href="{{ route('simpanan.wajib') }}" class="nav-link sub-link">Simpanan Wajib</a></li>
+                    <li><a href="{{ route('simpanan.sukarela') }}" class="nav-link sub-link">Simpanan Sukarela</a></li>
+                </ul>
+                </div>
+            </li>
+            <li>
+                <a href="#submenuPinjaman" data-bs-toggle="collapse" class="nav-link dropdown-toggle-custom d-flex justify-content-between align-items-center" id="togglePinjaman">
+                <span><i class="bi bi-journal-text"></i> Pinjaman</span>
+                </a>
+                <div class="collapse" id="submenuPinjaman">
+                <ul class="nav flex-column">
+                    <li><a href="#" class="nav-link sub-link">Pinjaman</a></li>
+                    <li><a href="#" class="nav-link sub-link">Setting Pinjaman</a></li>
+                </ul>
+                </div>
+            </li>
+
             <li><a href="#" class="nav-link"><i class="bi bi-cash"></i> Angsuran</a></li>
+            <li>
+                <a href="#submenuKeuangan" data-bs-toggle="collapse" class="nav-link dropdown-toggle-custom d-flex justify-content-between align-items-center" id="toggleKeuangan">
+                <span><i class="bi bi-currency-dollar"></i> Keuangan</span>
+                </a>
+                <div class="collapse" id="submenuKeuangan">
+                <ul class="nav flex-column">
+                    <li><a href="{{ route('tambahTransaksi') }}" class="nav-link sub-link">Tambah transaksi</a></li>
+                    <li><a href="{{ route('kas') }}" class="nav-link sub-link">Kas</a></li>
+                </ul>
+                </div>
+            </li>
         </ul>
     </div>
 
@@ -289,15 +331,15 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // === Sidebar Toggle & LocalStorage ===
         const toggleBtn = document.getElementById('toggleSidebar');
         const sidebar = document.getElementById('sidebar');
         const content = document.getElementById('content');
+        const submenu = document.getElementById('submenuSimpanan');
+        const simpananToggle = document.getElementById('simpananMenuToggle');
 
-        // Ambil status dari localStorage
+        // ====== SIDEBAR UTAMA (BUKA/TUTUP) ======
         const isSidebarOpen = localStorage.getItem('sidebarOpen') === 'true';
 
-        // Set tampilan awal sesuai status disimpan
         if (isSidebarOpen) {
             sidebar.classList.add('show');
             content.classList.remove('full');
@@ -306,50 +348,62 @@
             content.classList.add('full');
         }
 
-        // Toggle saat tombol ditekan
         toggleBtn.addEventListener('click', () => {
             sidebar.classList.toggle('show');
             content.classList.toggle('full');
-
-            // Simpan status ke localStorage
             localStorage.setItem('sidebarOpen', sidebar.classList.contains('show'));
         });
 
-        // === Input Search Clear Button ===
-        const searchInput = document.getElementById('searchInput');
-        const clearBtn = document.getElementById('clearSearch');
+        // ====== SUBMENU SIMPANAN ======
+        const submenuSimpanan = document.getElementById('submenuSimpanan');
+        const toggleSimpanan = document.getElementById('toggleSimpanan');
+        const simpananOpen = localStorage.getItem('simpananDropdownOpen') === 'true';
 
-        // Tampilkan tombol X jika ada isi
-        function toggleClearButton() {
-            if (searchInput && clearBtn) {
-            if (searchInput.value.trim().length > 0) {
-                clearBtn.classList.remove('d-none');
-            } else {
-                clearBtn.classList.add('d-none');
-            }
-            }
+        if (simpananOpen) {
+        submenuSimpanan.classList.add('show');
+        toggleSimpanan.setAttribute('aria-expanded', 'true');
         }
 
-        // Saat input berubah
-        if (searchInput) {
-            searchInput.addEventListener('input', toggleClearButton);
+        toggleSimpanan.addEventListener('click', () => {
+        const isOpen = submenuSimpanan.classList.contains('show');
+        setTimeout(() => {
+            localStorage.setItem('simpananDropdownOpen', !isOpen);
+        }, 100);
+        });
+
+        // ====== SUBMENU KEUANGAN ======
+        const submenuKeuangan = document.getElementById('submenuKeuangan');
+        const toggleKeuangan = document.getElementById('toggleKeuangan');
+        const keuanganOpen = localStorage.getItem('keuanganDropdownOpen') === 'true';
+
+        if (keuanganOpen) {
+        submenuKeuangan.classList.add('show');
+        toggleKeuangan.setAttribute('aria-expanded', 'true');
         }
 
-        // Saat tombol X ditekan
-        if (clearBtn) {
-            clearBtn.addEventListener('click', function () {
-            searchInput.value = '';
-            clearBtn.classList.add('d-none');
-            searchInput.focus();
+        toggleKeuangan.addEventListener('click', () => {
+        const isOpen = submenuKeuangan.classList.contains('show');
+        setTimeout(() => {
+            localStorage.setItem('keuanganDropdownOpen', !isOpen);
+        }, 100);
+        });
 
-            // Optional: auto submit form setelah clear
-            searchInput.closest('form').submit();
-            });
+        // ====== SUBMENU PINJAMAN ======
+        const submenuPinjaman = document.getElementById('submenuPinjaman');
+        const togglePinjaman = document.getElementById('togglePinjaman');
+        const pinjamanOpen = localStorage.getItem('pinjamanDropdownOpen') === 'true';
+
+        if (pinjamanOpen) {
+        submenuPinjaman.classList.add('show');
+        togglePinjaman.setAttribute('aria-expanded', 'true');
         }
 
-        // Jalankan saat awal jika input sudah ada nilainya
-        toggleClearButton();
+        togglePinjaman.addEventListener('click', () => {
+        const isOpen = submenuPinjaman.classList.contains('show');
+        setTimeout(() => {
+            localStorage.setItem('pinjamanDropdownOpen', !isOpen);
+        }, 100);
+        });
     </script>
-
 </body>
 </html>
